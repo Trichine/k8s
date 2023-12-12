@@ -1,0 +1,7 @@
+resources:
+  - wordpress-mysql-phpmyadmin-all-in-one.yaml
+  - autoscaling.yml
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=YOUR_PASSWORD

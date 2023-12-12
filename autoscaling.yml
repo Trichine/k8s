@@ -1,0 +1,25 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: wordpress-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: wordpress
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageValue: 500Mi  # Ajustez la valeur selon vos besoins
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 240  # Durée en secondes avant le scale-down après un scale-up réussi
+      policies:
+        - type: Pods
+          value: 1
+          periodSeconds: 60  # Période d'évaluation des politiques
